@@ -81,7 +81,7 @@ $pegawai2 = mysqli_num_rows($query2);
                 <div class="col-sm-6">
                     <div class="card shadow-card bg-primary text-light">
                     <div class="card-body">
-                        <h5 class="card-title">Pegawai Putus Kontrak</h5>
+                        <h5 class="card-title">Pegawai Dalam Pembinaan</h5>
                         <p class="card-text"><?= htmlentities($pegawai2); ?> Pegawai.</p>
                     </div>
                     </div>

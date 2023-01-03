@@ -1,6 +1,7 @@
 <?php
 // Inisialisasi
 session_start();
+error_reporting(0);
 include 'config/koneksi.php';
 include 'includes/function.php';
 // End Inisialisasi
@@ -39,6 +40,7 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
 -moz-box-shadow: 18px 22px 40px 0px rgba(0,0,0,0.75);
             padding: 20px;
             border-radius: 25px;
+            width: 70%;
         }
         table {
             border-collapse: collapse;
@@ -68,8 +70,51 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
         </div> -->
         <?php
         if(isset($_GET['bulan'])){
-            if($_GET['bulan'] != ""){ ?>
-            <h1>Hello Gaes</h1>
+            if($_GET['bulan'] != ""){
+            $bulan = mysqli_real_escape_string($koneksi, $_GET['bulan']);
+            $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE bulan='$bulan'");
+            // Sorting max to min
+            $datax = mysqli_fetch_all($query);
+            $nums = mysqli_num_rows($query);
+            $arr = array();
+
+            for($i = 0; $i < $nums; $i++){
+                array_push($arr, $datax[$i][9]);
+            }
+            // End Sorting
+            ?>
+            <h1 class="text-center fw-bold">Rekap Nilai Bulan <?= $months[$bulan-1] ?></h1>
+
+            <table class="table text-center">
+                <thead>
+                    <tr class="bg-info">
+                    <th scope="col">No.</th>
+                    <th scope="col">Nama Pegawai</th>
+                    <th scope="col">Total Nilai</th>
+                    <th scope="col">Nilai Rata-Rata</th>
+                    <th scope="col">Tanggal</th>
+                    </tr>
+                </thead>
+                <tbody class="fw-bold">
+                    <?php
+                    $no = 1;
+                    rsort($arr);
+
+                    $arrlength = count($arr);
+                    for($x = 0; $x < $arrlength; $x++){
+                        $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE average='$arr[$x]' AND bulan='$bulan'");
+                        $data = mysqli_fetch_array($query, MYSQLI_ASSOC);
+                    ?>
+                    <tr>
+                    <th scope="row"><?= $no++; ?></th>
+                    <td><?= htmlentities($data['namaPegawai']); ?></td>
+                    <td><?= htmlentities($data['total']); ?></td>
+                    <td><?= htmlentities($data['average']); ?></td>
+                    <td><?= htmlentities($data['tanggal']); ?></td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
             <?php } 
             else {
                 header("Location: rekap_bulanan.php");
@@ -78,7 +123,7 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
         <?php }
         else { ?>
         <div class="row">
-            <h1 class="text-center mb-3">Mau Ngambil Bulan Apa Nich ?</h1>
+            <h1 class="text-center fw-bold mb-3">Mau Ngambil Bulan Apa Nich ?</h1>
         <?php
         $bulan = 1;
         foreach($months as $month){

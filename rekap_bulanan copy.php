@@ -13,13 +13,7 @@ if(!isset($_SESSION['id']) && !isset($_SESSION['username'])){
 }
 // End Validasi
 
-// Get data
-
-$id = mysqli_real_escape_string($koneksi, $_GET['id']);
-$query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE id='$id'");
-$data = mysqli_fetch_array($query, MYSQLI_ASSOC);
-
-// End Get data
+$months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 
 ?>
 <!DOCTYPE html>
@@ -43,9 +37,9 @@ $data = mysqli_fetch_array($query, MYSQLI_ASSOC);
             box-shadow: 18px 22px 40px 0px rgba(0,0,0,0.75);
 -webkit-box-shadow: 18px 22px 40px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 18px 22px 40px 0px rgba(0,0,0,0.75);
-            padding: 10px;
-            width: 75%;
+            padding: 20px;
             border-radius: 25px;
+            width: 70%;
         }
         table {
             border-collapse: collapse;
@@ -57,6 +51,9 @@ $data = mysqli_fetch_array($query, MYSQLI_ASSOC);
         }
         .bg-custom2 {
             background-color: #91D8E4;
+        }
+        .btn {
+            vertical-align: center;
         }
     </style>
 </head>
@@ -70,29 +67,76 @@ $data = mysqli_fetch_array($query, MYSQLI_ASSOC);
                 <label for="floatingPassword">Cari Pegawai</label>
             </div>
         </div> -->
-        <h1>Detail Nilai <?= htmlentities($data['namaPegawai']) ?></h1>
-        <table class="table text-center">
-            <thead>
-                <tr class="bg-info">
-                <th scope="col">Nama Pegawai</th>
-                <th scope="col">Rajin</th>
-                <th scope="col">Disiplin</th>
-                <th scope="col">Loyal</th>
-                <th scope="col">Kreatif</th>
-                <th scope="col">Mandiri</th>
-                </tr>
-            </thead>
-            <tbody class="fw-bold">
-               <tr>
-                <td><?= htmlentities($data['namaPegawai']); ?></td>
-                <td><?= htmlentities($data['rajin']); ?></td>
-                <td><?= htmlentities($data['disiplin']); ?></td>
-                <td><?= htmlentities($data['loyal']); ?></td>
-                <td><?= htmlentities($data['kreatif']); ?></td>
-                <td><?= htmlentities($data['mandiri']); ?></td>
-               </tr>
-            </tbody>
-        </table>
+        <?php
+        if(isset($_GET['bulan'])){
+            if($_GET['bulan'] != ""){
+            $bulan = mysqli_real_escape_string($koneksi, $_GET['bulan']);
+            $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE bulan='$bulan'");
+            // Sorting max to min
+            $datax = mysqli_fetch_all($query);
+            $nums = mysqli_num_rows($query);
+            $arr = array();
+
+            for($i = 0; $i < $nums; $i++){
+                array_push($arr, $datax[$i][9]);
+            }
+            // End Sorting
+            ?>
+            <h1 class="text-center fw-bold">Rekap Nilai Bulan <?= $months[$bulan-1] ?></h1>
+
+            <table class="table text-center">
+                <thead>
+                    <tr class="bg-info">
+                    <th scope="col">No.</th>
+                    <th scope="col">Nama Pegawai</th>
+                    <th scope="col">Total Nilai</th>
+                    <th scope="col">Nilai Rata-Rata</th>
+                    <th scope="col">Tanggal</th>
+                    </tr>
+                </thead>
+                <tbody class="fw-bold">
+                    <?php
+                    $no = 1;
+                    foreach($query as $data){
+                    ?>
+                    <tr>
+                        <td><?= $no++; ?></td>
+                        <td><?= htmlentities($data['namaPegawai']); ?></td>
+                        <td><?= htmlentities($data['total']); ?></td>
+                        <td><?php
+                        if($data['average'] > 59){
+                        ?>
+                        <a class="btn btn-success" href="#"><?= htmlentities($data['average']); ?></a>
+                        <?php }
+                        else {
+                        ?>
+                        <a class="btn btn-warning" href="#"><?= htmlentities($data['average']); ?></a>
+                        <?php } ?>
+                        </td>
+                        <td><?= htmlentities($data['tanggal']); ?></td>
+                    </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+            <?php } 
+            else {
+                header("Location: rekap_bulanan.php");
+            }
+            ?>
+        <?php }
+        else { ?>
+        <div class="row">
+            <h1 class="text-center fw-bold mb-3">Mau Ngambil Bulan Apa Nich ?</h1>
+        <?php
+        $bulan = 1;
+        foreach($months as $month){
+        ?>
+        <div class="col-6">
+            <a class="btn btn-outline-primary d-flex mb-2 justify-content-center" href="rekap_bulanan.php?bulan=<?= $bulan++; ?>"><?= $month; ?></a>
+        </div>
+       <?php } ?>
+       </div>
+       <?php } ?>
         <!-- <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <li class="page-item"><a class="page-link" href="#">Previous</a></li>

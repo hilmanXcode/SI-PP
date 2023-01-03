@@ -1,3 +1,4 @@
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php 
 if(isset($_SESSION['message'])){
@@ -68,11 +69,6 @@ if(isset($_SESSION['message'])){
         // document.getElementById("time").innerHTML = currentTime;
         document.getElementById("day").innerHTML = currentDay;
         document.getElementById("date").innerHTML = fullDate;
-       
-
-        
-    
-
 
     }
     getCurrentTimeDate();
@@ -88,4 +84,24 @@ if(isset($_SESSION['message'])){
 
         document.getElementById("time").innerHTML = `${hours}:${minutes}:${seconds}`;
 	}
+
+    $('.alert-notif').on('click',function(){
+        var getLink = $(this).attr('href');
+        Swal.fire({
+            title: "Yakin hapus data?",            
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            confirmButtonText: 'Ya',
+            cancelButtonColor: '#3085d6',
+            cancelButtonText: "Batal"
+        
+        }).then(result => {
+            //jika klik ya maka arahkan ke proses.php
+            if(result.isConfirmed){
+                window.location.href = getLink
+            }
+        })
+        return false;
+    });
 </script>

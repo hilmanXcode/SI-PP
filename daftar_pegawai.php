@@ -53,7 +53,7 @@ $no = $halaman_awal + 1;
 -webkit-box-shadow: 18px 22px 40px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 18px 22px 40px 0px rgba(0,0,0,0.75);
             padding: 10px;
-            width: 100%;
+            width: 70%;
             border-radius: 25px;
         }
         table {
@@ -108,7 +108,7 @@ $no = $halaman_awal + 1;
                     if($num < 1){
                     ?>
                     <a href="beri_nilai.php?id=<?= $data['id']; ?>" class="btn btn-outline-success">Beri Nilai</a>
-                    <a href="hapus_pegawai.php?id=<?= $data['id']; ?>" class="btn btn-danger">Hapus</a>
+                    <a href="hapus_pegawai.php?id=<?= $data['id']; ?>" class="btn btn-danger alert-notif">Hapus</a>
                     <?php }
                     else {
                     ?>

@@ -64,7 +64,7 @@ for($i = 0; $i < $nums; $i++){
 -webkit-box-shadow: 18px 22px 40px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 18px 22px 40px 0px rgba(0,0,0,0.75);
             padding: 10px;
-            width: 100%;
+            width: 70%;
             border-radius: 25px;
         }
         table {
