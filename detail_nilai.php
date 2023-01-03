@@ -13,22 +13,13 @@ if(!isset($_SESSION['id']) && !isset($_SESSION['username'])){
 }
 // End Validasi
 
-// Pagination
+// Get data
 
-$batas = 10;
-$halaman = isset($_GET['halaman'])? (int)$_GET['halaman'] : 1;
-$halaman_awal = ($halaman > 1 ) ? ($halaman * $batas) - $batas : 0;	
+$id = mysqli_real_escape_string($koneksi, $_GET['id']);
+$query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE id='$id'");
+$data = mysqli_fetch_array($query, MYSQLI_ASSOC);
 
-$previous = $halaman - 1;
-$next = $halaman + 1;
-
-$data = mysqli_query($koneksi,"SELECT * FROM pegawai");
-$jumlah_data = mysqli_num_rows($data);
-$total_halaman = ceil($jumlah_data / $batas);
-$datas = mysqli_query($koneksi, "SELECT * FROM pegawai LIMIT $halaman_awal, $batas") or die(mysqli_error($koneksi));
-$no = $halaman_awal + 1;
-
-// End Pagination
+// End Get data
 
 ?>
 <!DOCTYPE html>
@@ -79,80 +70,28 @@ $no = $halaman_awal + 1;
                 <label for="floatingPassword">Cari Pegawai</label>
             </div>
         </div> -->
-        
-        <a href="export_excel.php?data_pegawai" class="btn btn-success mb-2">Export To Excel</a>
         <table class="table text-center">
             <thead>
                 <tr class="bg-info">
-                <th scope="col">No.</th>
                 <th scope="col">Nama Pegawai</th>
-                <th scope="col">Jabatan</th>
-                <th scope="col">Aksi</th>
+                <th scope="col">Rajin</th>
+                <th scope="col">Disiplin</th>
+                <th scope="col">Loyal</th>
+                <th scope="col">Kreatif</th>
+                <th scope="col">Mandiri</th>
                 </tr>
             </thead>
             <tbody class="fw-bold">
-                <?php
-                $no = 0;
-                foreach($datas as $data){
-                    $no++;
-                ?>
-                <tr>
-                <th scope="row"><?= $no; ?></th>
-                <td><?= htmlentities($data['namaLengkap']); ?></td>
-                <td><?= htmlentities($data['jabatan']); ?></td>
-                <td>
-                    <?php
-                    $idx = $data['id'];
-                    $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE id_pegawai='$idx'");
-                    $num = mysqli_num_rows($query);
-                    if($num < 1){
-                    ?>
-                    <a href="beri_nilai.php?id=<?= $data['id']; ?>" class="btn btn-outline-success">Beri Nilai</a>
-                    <a href="hapus_pegawai.php?id=<?= $data['id']; ?>" class="btn btn-danger">Hapus</a>
-                    <?php }
-                    else {
-                    ?>
-                    <a href="#" class="btn btn-success">Sudah Diberi Nilai</a>
-                    <?php } ?>
-                </td>
-                </tr>
-                <?php } ?>
+               <tr>
+                <td><?= htmlentities($data['namaPegawai']); ?></td>
+                <td><?= htmlentities($data['rajin']); ?></td>
+                <td><?= htmlentities($data['disiplin']); ?></td>
+                <td><?= htmlentities($data['loyal']); ?></td>
+                <td><?= htmlentities($data['kreatif']); ?></td>
+                <td><?= htmlentities($data['mandiri']); ?></td>
+               </tr>
             </tbody>
         </table>
-        <nav>
-        <ul class="pagination justify-content-center">
-          <?php 
-            if($halaman != 1) {
-          ?>
-          <li class="page-item">
-            <a class="page-link" <?php if($halaman > 1){ echo "href='?halaman=$previous'"; } ?>>Previous</a>
-          </li>
-          <?php } else {
-
-          } ?>
-          <?php 
-          for($x= 1; $x <= $total_halaman; $x++){
-            if($x != 1) {
-            ?>
-            <li class="page-item"><a class="page-link" href="?halaman=<?php echo $x ?>"><?php echo $x; ?></a></li>
-            <?php
-            } else {
-              
-            }
-          }
-          ?>
-          <?php
-            if($halaman != 1) {
-          ?>
-          <li class="page-item">
-            <a  class="page-link" <?php if($halaman < $total_halaman) { echo "href='?halaman=$next'"; } ?>>Next</a>
-          </li>
-          <?php } else {
-
-          } ?>
-
-        </ul>
-      </nav>
         <!-- <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
                 <li class="page-item"><a class="page-link" href="#">Previous</a></li>

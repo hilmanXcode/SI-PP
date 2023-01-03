@@ -90,6 +90,8 @@ for($i = 0; $i < $nums; $i++){
                 <label for="floatingPassword">Cari Pegawai</label>
             </div>
         </div> -->
+        <a class="btn btn-success mb-2" href="rekap_bulanan.php">Rekap Nilai Bulanan</a>
+        <a class="btn btn-success mb-2" href="#">Rekap Nilai Tahunan</a>
         <table class="table text-center">
             <thead>
                 <tr class="bg-info">
@@ -105,14 +107,12 @@ for($i = 0; $i < $nums; $i++){
                 rsort($arr);
 
                 $arrlength = count($arr);
-                $no = 0;
                 for($x = 0; $x < $arrlength; $x++){
-                    $no++;
                     $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE average='$arr[$x]'");
                     $data = mysqli_fetch_array($query, MYSQLI_ASSOC);
                 ?>
                 <tr>
-                <th scope="row"><?= $no; ?></th>
+                <th scope="row"><?= $no++; ?></th>
                 <td><?= htmlentities($data['namaPegawai']); ?></td>
                 <td><?= htmlentities($data['total']); ?></td>
                 <td><?= htmlentities($data['average']); ?></td>
@@ -120,11 +120,11 @@ for($i = 0; $i < $nums; $i++){
                     <?php
                     if($data['average'] > 60){
                     ?>
-                    <a href="#" class="btn btn-success">Kontrak++</a>
+                    <a href="detail_nilai.php?id=<?php echo $data['id']; ?>" class="btn btn-success">Kontrak++</a>
                     <?php }
                     else {
                     ?>
-                    <a href="#" class="btn btn-danger">Degradasi</a>
+                    <a href="detail_nilai.php?id=<?php echo $data['id']; ?>" class="btn btn-warning">Pembinaan</a>
                     <?php } ?>
                 </td>
                 </tr>

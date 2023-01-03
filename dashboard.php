@@ -1,19 +1,25 @@
 <?php
+// Inisialisasi
 session_start();
 include 'config/koneksi.php';
 include 'includes/function.php';
+// End Inisialisasi
 
+// Validasi
 if(!isset($_SESSION['id']) && !isset($_SESSION['username'])){
     message('error', 'Error!', 'Kamu harus login terlebih dahulu!');
     header("Location: login.php");
     die();
 }
+// End Validasi
 
+// Get Data
 $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE average > 60");
 $pegawai = mysqli_num_rows($query);
 
 $query2 = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE average < 60");
 $pegawai2 = mysqli_num_rows($query2);
+// End Get Data
 
 ?>
 <!DOCTYPE html>
@@ -48,6 +54,10 @@ $pegawai2 = mysqli_num_rows($query2);
             box-shadow: 10px 10px 0px 0px rgba(13,110,253,0.84);
 -webkit-box-shadow: 10px 10px 0px 0px rgba(13,110,253,0.84);
 -moz-box-shadow: 10px 10px 0px 0px rgba(13,110,253,0.84);
+        }
+        .jam {
+            margin-left: 94%;
+            margin-top: 10px;
         }
     </style>
 </head>

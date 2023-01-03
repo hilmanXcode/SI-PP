@@ -1,14 +1,20 @@
 <?php
+// Inisialisasi
 session_start();
 error_reporting(0);
 include 'config/koneksi.php';
 include 'includes/function.php';
+// End Inisialisasi
 
+// Validasi
 if(!isset($_SESSION['id']) && !isset($_SESSION['username'])){
   message('error', 'Error!', 'Kamu harus login terlebih dahulu!');
   header("Location: login.php");
   die();
 }
+// End Validasi
+
+// Check if haved nilai
 $id = mysqli_real_escape_string($koneksi, $_GET['id']);
 
 $check = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE id_pegawai='$id'");
@@ -20,9 +26,12 @@ if($datacheck['rajin'] != ""){
     die();
 }
 
+// End Check
+
+// Get Data
 $query = mysqli_query($koneksi, "SELECT * FROM pegawai WHERE id='$id'");
 $data = mysqli_fetch_array($query, MYSQLI_ASSOC);
-
+// End Get Data
 
 
 
