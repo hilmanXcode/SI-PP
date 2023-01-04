@@ -90,8 +90,8 @@ for($i = 0; $i < $nums; $i++){
                 <label for="floatingPassword">Cari Pegawai</label>
             </div>
         </div> -->
-        <a class="btn btn-success mb-2" href="rekap_bulanan.php">Rekap Nilai Bulanan</a>
-        <a class="btn btn-success mb-2" href="#">Rekap Nilai Tahunan</a>
+        <a class="btn btn-outline-success mb-2" href="rekap_bulanan.php">Rekap Nilai Bulanan</a>
+        <a class="btn btn-outline-success mb-2" href="rekap_tahunan.php">Rekap Nilai Tahunan</a>
         <table class="table text-center">
             <thead>
                 <tr class="bg-info">

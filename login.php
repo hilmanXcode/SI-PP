@@ -1,5 +1,6 @@
 <?php
 session_start();
+include 'config/koneksi.php';
 include 'includes/function.php';
 
 if(isset($_SESSION['id']) && isset($_SESSION['username'])){

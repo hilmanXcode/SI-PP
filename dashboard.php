@@ -68,13 +68,16 @@ $pegawai2 = mysqli_num_rows($query2);
         <div class="welcome p-5">
             <h1 class="fw-bold">Selamat Datang Kembali Admin</h1>
             <h5 class="text-muted">Selamat Bertugas Kembali</h5>
-            <h5 class="pt-5 fw-bold">Statistik : </h5>
+            <h5 class="pt-2 fw-bold">Statistik : </h5>
             <div class="row pt-2">
-                <div class="col-sm-6 mb-3 mb-sm-0">
+                <div class="col-12 mb-3">
+                    <canvas id="myChart"></canvas>
+                </div>
+                <!-- <div class="col-sm-6 mb-3 mb-sm-0">
                     <div class="card shadow-card bg-primary text-light">
                     <div class="card-body">
                         <h5 class="card-title">Pegawai Lanjut Kontrak</h5>
-                        <p class="card-text"><?= htmlentities($pegawai); ?> Pegawai.</p>
+                        <p class="card-text"> Pegawai.</p>
                     </div>
                     </div>
                 </div>
@@ -82,14 +85,58 @@ $pegawai2 = mysqli_num_rows($query2);
                     <div class="card shadow-card bg-primary text-light">
                     <div class="card-body">
                         <h5 class="card-title">Pegawai Dalam Pembinaan</h5>
-                        <p class="card-text"><?= htmlentities($pegawai2); ?> Pegawai.</p>
+                        <p class="card-text"> Pegawai.</p>
                     </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div> 
     </div>
     <?php include 'includes/footer.php'; ?>
+    <script>
+    var ctx = document.getElementById("myChart").getContext('2d');
+	var myChart = new Chart(ctx, {
+		type: 'bar',
+		data: {
+			labels: ["Lanjut Kontrak", "Pembinaan"],
+			datasets: [{
+				label: '',
+				data: [
+				<?php 
+				$jumlah_lanjut = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE average > 59");
+				echo mysqli_num_rows($jumlah_lanjut);
+				?>, 
+				<?php 
+				$jumlah_pembinaan = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE average < 60");
+				echo mysqli_num_rows($jumlah_pembinaan);
+				?>
+				],
+				backgroundColor: [
+				'rgba(255, 99, 132, 0.2)',
+				'rgba(54, 162, 235, 0.2)',
+				'rgba(255, 206, 86, 0.2)',
+				'rgba(75, 192, 192, 0.2)'
+				],
+				borderColor: [
+				'rgba(255,99,132,1)',
+				'rgba(54, 162, 235, 1)',
+				'rgba(255, 206, 86, 1)',
+				'rgba(75, 192, 192, 1)'
+				],
+				borderWidth: 1
+			}]
+		},
+		options: {
+			scales: {
+				yAxes: [{
+					ticks: {
+						beginAtZero:true
+					}
+				}]
+			}
+		}
+	});
+</script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
 </html>

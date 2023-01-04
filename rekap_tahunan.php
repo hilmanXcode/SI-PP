@@ -14,7 +14,18 @@ if(!isset($_SESSION['id']) && !isset($_SESSION['username'])){
 }
 // End Validasi
 
+// Get Data
+$cokot = mysqli_query($koneksi, "SELECT * FROM misc");
+// End Get Data
+
+
+
+
 $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+
+// $query = mysqli_query($koneksi, "SELECT  FROM kinerja_pegawai");
+
+
 
 ?>
 <!DOCTYPE html>
@@ -53,8 +64,9 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
         .bg-custom2 {
             background-color: #91D8E4;
         }
-        .btn {
-            vertical-align: center;
+        .fvck {
+            width: 50%;
+            margin-left: 25%;
         }
     </style>
 </head>
@@ -62,28 +74,13 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
 <?php include 'includes/navigasi.php'; ?>
     <div class="container-fluid d-flex justify-content-center p-4">
         <div class="wrap">
-        <!-- <div class="searchbar">
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" name="search" id="floatingPassword" placeholder="Password" />
-                <label for="floatingPassword">Cari Pegawai</label>
-            </div>
-        </div> -->
-        <?php
-        if(isset($_GET['bulan'])){
-            if($_GET['bulan'] != ""){
-            $bulan = mysqli_real_escape_string($koneksi, $_GET['bulan']);
-            $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE bulan='$bulan'");
-            // Sorting max to min
-            $datax = mysqli_fetch_all($query);
-            $nums = mysqli_num_rows($query);
-            $arr = array();
-
-            for($i = 0; $i < $nums; $i++){
-                array_push($arr, $datax[$i][9]);
-            }
-            // End Sorting
+            <?php
+            if(isset($_GET['tahun'])){
+                if($_GET['tahun'] != ""){
+                $years = $_GET['tahun'];
+                $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE tahun='$years'");
             ?>
-            <h1 class="text-center fw-bold">Rekap Nilai Bulan <?= $months[$bulan-1] ?></h1>
+            <h1 class="text-center fw-bold">Rekap Nilai Tahun <?= $_GET['tahun']; ?></h1>
 
             <table class="table text-center">
                 <thead>
@@ -98,53 +95,48 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
                 <tbody class="fw-bold">
                     <?php
                     $no = 1;
-                    rsort($arr);
-
-                    $arrlength = count($arr);
-                    for($x = 0; $x < $arrlength; $x++){
-                        $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE average='$arr[$x]' AND bulan='$bulan'");
-                        $data = mysqli_fetch_array($query, MYSQLI_ASSOC);
+                    foreach($query as $data){
                     ?>
                     <tr>
-                    <th scope="row"><?= $no++; ?></th>
-                    <td><?= htmlentities($data['namaPegawai']); ?></td>
-                    <td><?= htmlentities($data['total']); ?></td>
-                    <td><?= htmlentities($data['average']); ?></td>
-                    <td><?= htmlentities($data['tanggal']); ?></td>
+                        <td><?= $no++; ?></td>
+                        <td><?= htmlentities($data['namaPegawai']); ?></td>
+                        <td><?= htmlentities($data['total']); ?></td>
+                        <td><?php
+                        if($data['average'] > 59){
+                        ?>
+                        <a class="btn btn-success" href="#"><?= htmlentities($data['average']); ?></a>
+                        <?php }
+                        else {
+                        ?>
+                        <a class="btn btn-warning" href="#"><?= htmlentities($data['average']); ?></a>
+                        <?php } ?>
+                        </td>
+                        <td><?= htmlentities($data['tanggal']); ?></td>
                     </tr>
                     <?php } ?>
                 </tbody>
             </table>
-            <?php } 
+            <?php }
             else {
-                message('error', 'Error', 'Tidak ada bulan yang di pilih!');
-                header("Location: rekap_bulanan.php");
+                message('error', 'Error', 'Tidak Ada tahun yang di pilih!');
+                header("Location: rekap_tahunan.php");
                 die();
-            }
+            }?>
+            <?php }
+            else {
             ?>
-        <?php }
-        else { ?>
-        <div class="row">
-            <h1 class="text-center fw-bold mb-3">Mau Ngambil Bulan Apa Nich ?</h1>
-        <?php
-        $bulan = 1;
-        foreach($months as $month){
-        ?>
-        <div class="col-6">
-            <a class="btn btn-outline-primary d-flex mb-2 justify-content-center fw-bold" href="rekap_bulanan.php?bulan=<?= $bulan++; ?>"><?= $month; ?></a>
-        </div>
-       <?php } ?>
-       </div>
-       <?php } ?>
-        <!-- <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        </nav> -->
+            <h1 class="fw-bold text-center mx-2">Mau Ngambil Tahun Berapa Nich ?</h1>
+            <form action="" method="get">
+                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="tahun">
+                    <?php
+                    foreach($cokot as $woy){
+                    ?>
+                    <option value="<?= $woy['tahun']; ?>"><?= htmlentities($woy['tahun']); ?></option>
+                    <?php } ?>
+                </select>
+                <button type="submit" class="btn btn-outline-primary fvck">Lihat Data</button>
+            </form>
+            <?php } ?>
         </div>
     </div>
     <?php include 'includes/footer.php'; ?>

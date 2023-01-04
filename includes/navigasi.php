@@ -24,7 +24,7 @@
       </ul>
       <ul class="navbar-nav ml-auto px-2">
         <li class="nav-item">
-            <button class="btn btn-outline-danger" onclick="logout()">Logout</button>
+            <a href="logout.php" class="btn btn-outline-danger">Logout</a>
         </li>
       </ul>
       <hr class="text-light">
@@ -37,7 +37,7 @@
 
 <div class="container-fluid d-flex justify-content-end gap-2">
   <div class="btn btn-danger mt-2" >
-  <span id="day">Jum'at</span>, <span id="date">30 Desember 2022</span>
+  <span id="day">Loading</span> <span id="date">....</span>
   </div>
   <div class="btn btn-primary mt-2" id="time">
   Loading..

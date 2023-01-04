@@ -1,11 +1,13 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <?php 
 if(isset($_SESSION['message'])){
     echo $_SESSION['message'];
     unset($_SESSION['message']);
 }
 ?>
+
 <script>
     const logout = () => {
         window.location.href = "logout.php";
