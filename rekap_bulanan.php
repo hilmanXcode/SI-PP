@@ -25,6 +25,7 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daftar Pegawai | SI-PP</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+    <script src="https://kit.fontawesome.com/05e36d77eb.js" crossorigin="anonymous"></script>
     <style>
         body {
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -61,7 +62,7 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
 <body>
 <?php include 'includes/navigasi.php'; ?>
     <div class="container-fluid d-flex justify-content-center p-4">
-        <div class="wrap">
+        <div style="overflow-x: auto;" class="wrap">
         <!-- <div class="searchbar">
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" name="search" id="floatingPassword" placeholder="Password" />
@@ -72,7 +73,20 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
         if(isset($_GET['bulan'])){
             if($_GET['bulan'] != ""){
             $bulan = mysqli_real_escape_string($koneksi, $_GET['bulan']);
-            $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE bulan='$bulan'");
+            $cek = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE bulan = '$bulan'");
+            $numex = mysqli_num_rows($cek);
+            if($numex < 1){
+                message('error', 'Error', 'Belum ada data di bulan ini!');
+                header("Location: rekap_bulanan.php");
+                die();
+            }
+            if(isset($_GET['search'])){
+                $hu = $_GET['search'];
+                $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE bulan='$bulan' AND namaPegawai LIKE '%$hu%'");
+            }
+            else {
+                $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE bulan='$bulan'");
+            }
             // Sorting max to min
             $datax = mysqli_fetch_all($query);
             $nums = mysqli_num_rows($query);
@@ -84,7 +98,11 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
             // End Sorting
             ?>
             <h1 class="text-center fw-bold">Rekap Nilai Bulan <?= $months[$bulan-1] ?></h1>
-
+            <form action="" class="d-flex mb-2" role="search">
+                 <input type="hidden" name="bulan" value="<?= $bulan ?>">
+                <input class="form-control me-2" type="search" name="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-primary" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
             <table class="table text-center">
                 <thead>
                     <tr class="bg-info">
@@ -93,6 +111,7 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
                     <th scope="col">Total Nilai</th>
                     <th scope="col">Nilai Rata-Rata</th>
                     <th scope="col">Tanggal</th>
+                    <th scope="col">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="fw-bold">
@@ -100,10 +119,18 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
                     $no = 1;
                     rsort($arr);
 
+                    
                     $arrlength = count($arr);
                     for($x = 0; $x < $arrlength; $x++){
-                        $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE average='$arr[$x]' AND bulan='$bulan'");
-                        $data = mysqli_fetch_array($query, MYSQLI_ASSOC);
+                        if(isset($_GET['search'])){
+                            $nama = $_GET['search'];
+                            $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE average='$arr[$x]' AND bulan='$bulan' AND namaPegawai LIKE '%$nama%'");
+                            $data = mysqli_fetch_array($query, MYSQLI_ASSOC);
+                        }
+                        else {
+                            $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE average='$arr[$x]' AND bulan='$bulan'");
+                            $data = mysqli_fetch_array($query, MYSQLI_ASSOC);
+                        }
                     ?>
                     <tr>
                     <th scope="row"><?= $no++; ?></th>
@@ -111,6 +138,7 @@ $months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agus
                     <td><?= htmlentities($data['total']); ?></td>
                     <td><?= htmlentities($data['average']); ?></td>
                     <td><?= htmlentities($data['tanggal']); ?></td>
+                    <td><a href="detail_nilai.php?id=<?= $data['id']; ?>">Detail</a></td>
                     </tr>
                     <?php } ?>
                 </tbody>

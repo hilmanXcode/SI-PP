@@ -15,7 +15,9 @@ if(isset($_POST['login_submit'])){
         $_SESSION['id'] = $data['id'];
         $_SESSION['username'] = $data['username'];
         $_SESSION['level'] = $data['level'];
-        message('success', 'Berhasil', 'Kamu berhasil login');
+        $_SESSION['nama'] = $data['namaLengkap'];
+        $level = $_SESSION['level'];
+        message('success', 'Berhasil', "Kamu berhasil login sebagai $level");
         header("Location: dashboard.php");
         die();
     }

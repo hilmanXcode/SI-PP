@@ -66,7 +66,7 @@ $pegawai2 = mysqli_num_rows($query2);
 
     <div class="container d-flex justify-content-center align-items-center align-content-center">
         <div class="welcome p-5">
-            <h1 class="fw-bold">Selamat Datang Kembali Admin</h1>
+            <h1 class="fw-bold">Selamat Datang Kembali <?= $_SESSION['nama']; ?></h1>
             <h5 class="text-muted">Selamat Bertugas Kembali</h5>
             <h5 class="pt-2 fw-bold">Statistik : </h5>
             <div class="row pt-2">

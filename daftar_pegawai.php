@@ -72,7 +72,7 @@ $no = $halaman_awal + 1;
 <body>
 <?php include 'includes/navigasi.php'; ?>
     <div class="container-fluid d-flex justify-content-center p-4">
-        <div class="wrap">
+        <div style="overflow-x: auto;" class="wrap">
         <!-- <div class="searchbar">
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" name="search" id="floatingPassword" placeholder="Password" />

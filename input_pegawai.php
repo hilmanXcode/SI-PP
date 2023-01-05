@@ -26,11 +26,7 @@ if(!isset($_SESSION['id']) && !isset($_SESSION['username'])){
         background-repeat: no-repeat;
         height: 100vh; */
       }
-      .container {
-        height: 50vh;
-      }
       .wrap {
-        margin-top: 30vh;
         box-shadow: 18px 22px 40px 0px rgba(0,0,0,0.75);
 -webkit-box-shadow: 18px 22px 40px 0px rgba(0,0,0,0.75);
 -moz-box-shadow: 18px 22px 40px 0px rgba(0,0,0,0.75);
@@ -40,7 +36,7 @@ if(!isset($_SESSION['id']) && !isset($_SESSION['username'])){
   </head>
   <body>
     <?php include 'includes/navigasi.php'; ?>
-    <div class="container">
+    <div class="container p-5">
       <div class="wrap p-5">
         <h1 class="mb-3">Input Pegawai</h1>
         <form action="proses.php" method="post">

@@ -29,7 +29,7 @@
       </ul>
       <hr class="text-light">
       <span class="navbar-text">
-        <button class="btn btn-outline-info">Sistem Informasi Penilaian Pegawai v1</button>
+        <a href="https://github.com/hilmanXcode/SI-PP" target="_blank" class="btn btn-outline-info">Sistem Informasi Penilaian Pegawai v1</a>
       </span>
     </div>
   </div>

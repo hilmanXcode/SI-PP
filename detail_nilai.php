@@ -63,14 +63,15 @@ $data = mysqli_fetch_array($query, MYSQLI_ASSOC);
 <body>
 <?php include 'includes/navigasi.php'; ?>
     <div class="container-fluid d-flex justify-content-center p-4">
-        <div class="wrap">
+        <div style="overflow-x: auto;" class="wrap">
         <!-- <div class="searchbar">
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" name="search" id="floatingPassword" placeholder="Password" />
                 <label for="floatingPassword">Cari Pegawai</label>
             </div>
         </div> -->
-        <h1>Detail Nilai <?= htmlentities($data['namaPegawai']) ?></h1>
+        <h1 class="fw-bold mx-1">Detail Nilai <?= htmlentities($data['namaPegawai']) ?></h1>
+        <h2 class="text-muted mx-1">Pemberi Nilai : <?= htmlentities($data['penilai']) ?></h2>
         <table class="table text-center">
             <thead>
                 <tr class="bg-info">
