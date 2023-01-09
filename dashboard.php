@@ -68,8 +68,7 @@ $pegawai2 = mysqli_num_rows($query2);
         <div class="welcome p-5">
             <h1 class="fw-bold">Selamat Datang Kembali <?= $_SESSION['nama']; ?></h1>
             <h5 class="text-muted">Selamat Bertugas Kembali</h5>
-            <h5 class="pt-2 fw-bold">Statistik : </h5>
-            <h6>Total Nilai Pegawai</h6>
+            <h5 class="pt-2 fw-bold">Grafik Total Nilai Bulan Ini</h5>
             <div class="row pt-2">
                 <div class="col-12 mb-3">
                     <canvas id="myChart"></canvas>
@@ -102,34 +101,61 @@ $pegawai2 = mysqli_num_rows($query2);
 			labels: [
                 <?php
                 $nowMonth = date('m');
-                $xyz = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE bulan='$nowMonth'");
 
-                foreach($xyz as $kkk){
+                $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE bulan='$nowMonth'");
+                $data = mysqli_fetch_all($query);
+                $nums = mysqli_num_rows($query);
+                $arr = array();
+
+                for($i = 0; $i < $nums; $i++){
+                    array_push($arr, $data[$i][9]);
+                }
+
+                rsort($arr);
+
+                $arrlength = count($arr);
+                for($x = 0; $x < $arrlength; $x++){
+                    $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE average='$arr[$x]'");
+                    $data = mysqli_fetch_array($query, MYSQLI_ASSOC);
                 ?>
-                "<?= $kkk['namaPegawai']; ?>", <?php } ?>],
+                "<?= $data['namaPegawai']; ?>", <?php } ?>],
 			datasets: [{
 				label: '',
 				data: [
                     <?php
-                $xyz = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE bulan='$nowMonth'");
+                $nowMonth = date('m');
 
-                foreach($xyz as $kkk){
+                $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE bulan='$nowMonth'");
+                $data = mysqli_fetch_all($query);
+                $nums = mysqli_num_rows($query);
+                $arr = array();
+
+                for($i = 0; $i < $nums; $i++){
+                    array_push($arr, $data[$i][9]);
+                }
+
+                rsort($arr);
+
+                $arrlength = count($arr);
+                for($x = 0; $x < $arrlength; $x++){
+                    $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE average='$arr[$x]' AND bulan='1'");
+                    $data = mysqli_fetch_array($query, MYSQLI_ASSOC);
                 ?>
-                "<?= $kkk['total']; ?>", <?php } ?>
+                "<?= $data['total']; ?>", <?php } ?>
 				],
 				backgroundColor: [
-				'rgba(255, 99, 132, 0.2)',
-				'rgba(54, 162, 235, 0.2)',
-				'rgba(255, 206, 86, 0.2)',
-				'rgba(75, 192, 192, 0.2)'
-				],
-				borderColor: [
-				'rgba(255,99,132,1)',
-				'rgba(54, 162, 235, 1)',
-				'rgba(255, 206, 86, 1)',
-				'rgba(75, 192, 192, 1)'
-				],
-				borderWidth: 1
+				'rgba(255, 201, 60, 1)',
+				'rgba(134, 229, 255, 1)',
+				'rgba(91, 192, 248, 1)',
+				'rgba(0, 129, 201, 1)'
+				 ],
+				// borderColor: [
+				// 'rgba(255,99,132,1)',
+				// 'rgba(54, 162, 235, 1)',
+				// 'rgba(255, 206, 86, 1)',
+				// 'rgba(75, 192, 192, 1)'
+				// ],
+				// borderWidth: 1
 			}]
 		},
 		options: {
