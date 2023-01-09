@@ -69,6 +69,7 @@ $pegawai2 = mysqli_num_rows($query2);
             <h1 class="fw-bold">Selamat Datang Kembali <?= $_SESSION['nama']; ?></h1>
             <h5 class="text-muted">Selamat Bertugas Kembali</h5>
             <h5 class="pt-2 fw-bold">Statistik : </h5>
+            <h6>Total Nilai Pegawai</h6>
             <div class="row pt-2">
                 <div class="col-12 mb-3">
                     <canvas id="myChart"></canvas>
@@ -98,18 +99,23 @@ $pegawai2 = mysqli_num_rows($query2);
 	var myChart = new Chart(ctx, {
 		type: 'bar',
 		data: {
-			labels: ["Lanjut Kontrak", "Pembinaan"],
+			labels: [
+                <?php
+                $nowMonth = date('m');
+                $xyz = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE bulan='$nowMonth'");
+
+                foreach($xyz as $kkk){
+                ?>
+                "<?= $kkk['namaPegawai']; ?>", <?php } ?>],
 			datasets: [{
 				label: '',
 				data: [
-				<?php 
-				$jumlah_lanjut = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE average > 59");
-				echo mysqli_num_rows($jumlah_lanjut);
-				?>, 
-				<?php 
-				$jumlah_pembinaan = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE average < 60");
-				echo mysqli_num_rows($jumlah_pembinaan);
-				?>
+                    <?php
+                $xyz = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE bulan='$nowMonth'");
+
+                foreach($xyz as $kkk){
+                ?>
+                "<?= $kkk['total']; ?>", <?php } ?>
 				],
 				backgroundColor: [
 				'rgba(255, 99, 132, 0.2)',
