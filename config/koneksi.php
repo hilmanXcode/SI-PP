@@ -7,7 +7,7 @@ $db = "sipp";
 
 $koneksi = mysqli_connect($host, $user, $pass, $db);
 
-// My Logic
+// My Logic :v
 $queryx = mysqli_query($koneksi, "SELECT * FROM misc");
 $numsx = mysqli_num_rows($queryx);
 $Ynow = date('Y');
