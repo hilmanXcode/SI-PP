@@ -103,12 +103,20 @@ $no = $halaman_awal + 1;
                 <td>
                     <?php
                     $idx = $data['id'];
-                    $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE id_pegawai='$idx'");
+                    $nowMonth = date('m');
+                    $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE id_pegawai='$idx' AND bulan='$nowMonth'");
                     $num = mysqli_num_rows($query);
                     if($num < 1){
                     ?>
+                    <?php
+                    if($_SESSION['level'] == "pns"){
+                    ?>
                     <a href="beri_nilai.php?id=<?= $data['id']; ?>" class="btn btn-outline-success">Beri Nilai</a>
+                    <?php }
+                    elseif($_SESSION['level'] == "admin"){
+                    ?>
                     <a href="hapus_pegawai.php?id=<?= $data['id']; ?>" class="btn btn-danger alert-notif">Hapus</a>
+                    <?php } ?>
                     <?php }
                     else {
                     ?>

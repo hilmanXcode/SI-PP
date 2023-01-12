@@ -67,7 +67,7 @@ $pegawai2 = mysqli_num_rows($query2);
     <div class="container d-flex justify-content-center align-items-center align-content-center">
         <div class="welcome p-5">
             <h1 class="fw-bold">Selamat Datang Kembali <?= $_SESSION['nama']; ?></h1>
-            <h5 class="text-muted">Selamat Bertugas Kembali</h5>
+            <h5 class="text-muted">Selamat Bertugas Kembali </h5>
             <h5 class="pt-2 fw-bold">Grafik Total Nilai Bulan Ini</h5>
             <div class="row pt-2">
                 <div class="col-12 mb-3">
@@ -108,14 +108,14 @@ $pegawai2 = mysqli_num_rows($query2);
                 $arr = array();
 
                 for($i = 0; $i < $nums; $i++){
-                    array_push($arr, $data[$i][9]);
+                    array_push($arr, $data[$i][8]);
                 }
 
                 rsort($arr);
 
                 $arrlength = count($arr);
                 for($x = 0; $x < $arrlength; $x++){
-                    $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE average='$arr[$x]'");
+                    $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE total='$arr[$x]'");
                     $data = mysqli_fetch_array($query, MYSQLI_ASSOC);
                 ?>
                 "<?= $data['namaPegawai']; ?>", <?php } ?>],
@@ -131,14 +131,14 @@ $pegawai2 = mysqli_num_rows($query2);
                 $arr = array();
 
                 for($i = 0; $i < $nums; $i++){
-                    array_push($arr, $data[$i][9]);
+                    array_push($arr, $data[$i][8]);
                 }
 
                 rsort($arr);
 
                 $arrlength = count($arr);
                 for($x = 0; $x < $arrlength; $x++){
-                    $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE average='$arr[$x]' AND bulan='1'");
+                    $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE total='$arr[$x]' AND bulan='1'");
                     $data = mysqli_fetch_array($query, MYSQLI_ASSOC);
                 ?>
                 "<?= $data['total']; ?>", <?php } ?>
