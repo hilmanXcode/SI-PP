@@ -12,6 +12,11 @@ if(!isset($_SESSION['id']) && !isset($_SESSION['username'])){
   header("Location: login.php");
   die();
 }
+if($_SESSION['level'] != "pns"){
+  message('error', 'Error', 'Maaf kamu tidak punya akses untuk halaman ini');
+  header("Location: dashboard.php");
+  die();
+}
 // End Validasi
 
 // Check if haved nilai

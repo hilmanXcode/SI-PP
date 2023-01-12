@@ -10,6 +10,10 @@ if(!isset($_SESSION['id']) && !isset($_SESSION['username'])){
     die();
 }
 elseif(isset($_POST['input_pegawai'])){
+    if($_SESSION['level'] != "admin"){
+        message('error', 'Error', 'Maaf kamu tidak punya akses.');
+        die();
+    }
     $nama = mysqli_real_escape_string($koneksi, $_POST['nama']);
     $jabatan = mysqli_real_escape_string($koneksi, $_POST['jabatan']);
 
@@ -31,6 +35,10 @@ elseif(isset($_POST['input_pegawai'])){
     }
 }
 elseif(isset($_POST['beri_nilai'])){
+    if($_SESSION['level'] != "pns"){
+        message('error', 'Error', 'Maaf kamu tidak punya akses.');
+        die();
+    }
     $id_pegawai = $_POST['idpegawai'];
     $nama = $_POST['nama'];
     $rajin = $_POST['nilai_rajin'];

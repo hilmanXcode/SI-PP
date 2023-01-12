@@ -7,6 +7,11 @@ if(!isset($_SESSION['id']) && !isset($_SESSION['username'])){
   header("Location: login.php");
   die();
 }
+if($_SESSION['level'] != "admin"){
+  message('error', 'Error', 'Maaf kamu tidak punya akses untuk halaman ini');
+  header("Location: dashboard.php");
+  die();
+}
 
 ?>
 <!DOCTYPE html>
