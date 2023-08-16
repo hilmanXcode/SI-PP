@@ -32,16 +32,15 @@ if(isset($_SESSION['id']) && isset($_SESSION['username'])){
         }
         .wrap {
             width: 400px;
-            box-shadow: 16px 20px 25px -4px rgba(0,0,0,0.75);
--webkit-box-shadow: 16px 20px 25px -4px rgba(0,0,0,0.75);
--moz-box-shadow: 16px 20px 25px -4px rgba(0,0,0,0.75);
-            border-radius: 25px;
+            box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
         }
     </style>
 </head>
 <body>
     <div class="container d-flex justify-content-center align-items-center">
-        <div class="wrap p-5">
+        <div class="wrap bg-light rounded p-5">
             <h1 class="text-center">Login SI-PP</h1>
             <form action="pLogin.php" method="post">
                 <div class="form-floating mt-3 mb-3">

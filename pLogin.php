@@ -5,7 +5,7 @@ include 'includes/function.php';
 
 if(isset($_POST['login_submit'])){
     $uname = mysqli_real_escape_string($koneksi, $_POST['username']);
-    $pass = mysqli_real_escape_string($koneksi, $_POST['password']);
+    $pass = md5($_POST['password']);
 
     $query = mysqli_query($koneksi, "SELECT * FROM users WHERE username='$uname' AND password='$pass'");
     $data = mysqli_fetch_array($query, MYSQLI_ASSOC);

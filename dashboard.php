@@ -19,6 +19,7 @@ $pegawai = mysqli_num_rows($query);
 
 $query2 = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE average < 60");
 $pegawai2 = mysqli_num_rows($query2);
+
 // End Get Data
 
 ?>
@@ -64,7 +65,7 @@ $pegawai2 = mysqli_num_rows($query2);
 <body>
     <?php include 'includes/navigasi.php'; ?>
 
-    <div class="container d-flex justify-content-center align-items-center align-content-center">
+    <div class="container-fluid p-5 d-flex justify-content-center align-items-center align-content-center">
         <div class="welcome p-5">
             <h1 class="fw-bold">Selamat Datang Kembali <?= $_SESSION['nama']; ?></h1>
             <h5 class="text-muted">Selamat Bertugas Kembali </h5>
@@ -138,7 +139,7 @@ $pegawai2 = mysqli_num_rows($query2);
 
                 $arrlength = count($arr);
                 for($x = 0; $x < $arrlength; $x++){
-                    $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE total='$arr[$x]' AND bulan='1'");
+                    $query = mysqli_query($koneksi, "SELECT * FROM kinerja_pegawai WHERE total='$arr[$x]'");
                     $data = mysqli_fetch_array($query, MYSQLI_ASSOC);
                 ?>
                 "<?= $data['total']; ?>", <?php } ?>

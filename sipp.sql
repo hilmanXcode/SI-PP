@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 03, 2023 at 08:00 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.1.12
+-- Waktu pembuatan: 16 Agu 2023 pada 20.26
+-- Versi server: 10.4.28-MariaDB
+-- Versi PHP: 8.1.17
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kinerja_pegawai`
+-- Struktur dari tabel `kinerja_pegawai`
 --
 
 CREATE TABLE `kinerja_pegawai` (
@@ -40,20 +40,31 @@ CREATE TABLE `kinerja_pegawai` (
   `average` int(11) NOT NULL,
   `tanggal` date DEFAULT NULL,
   `tahun` int(11) DEFAULT NULL,
-  `bulan` int(11) DEFAULT NULL
+  `bulan` int(11) DEFAULT NULL,
+  `penilai` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `kinerja_pegawai`
---
-
-INSERT INTO `kinerja_pegawai` (`id`, `id_pegawai`, `namaPegawai`, `rajin`, `disiplin`, `loyal`, `kreatif`, `mandiri`, `total`, `average`, `tanggal`, `tahun`, `bulan`) VALUES
-(23, 1, 'Udin', 90, 100, 50, 70, 70, 380, 76, '2023-01-03', 2023, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pegawai`
+-- Struktur dari tabel `misc`
+--
+
+CREATE TABLE `misc` (
+  `tahun` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `misc`
+--
+
+INSERT INTO `misc` (`tahun`) VALUES
+(2023);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pegawai`
 --
 
 CREATE TABLE `pegawai` (
@@ -63,28 +74,10 @@ CREATE TABLE `pegawai` (
   `jabatan` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `pegawai`
---
-
-INSERT INTO `pegawai` (`id`, `id_atasan`, `namaLengkap`, `jabatan`) VALUES
-(1, NULL, 'Udin', 'OB'),
-(2, NULL, 'Jajang', 'OB'),
-(3, NULL, 'Saepudin', 'Manajer'),
-(4, NULL, 'KAKAKAKAK', 'KAKAKAKA'),
-(5, NULL, 'Jajangudin', 'Office'),
-(6, NULL, 'jajaja', 'Office'),
-(7, NULL, 'sasa', 'Office'),
-(8, NULL, 'dadan', 'Office'),
-(9, NULL, 'dede', 'Office'),
-(10, NULL, 'ade', 'Office'),
-(11, NULL, 'lalalala', 'Chef'),
-(13, NULL, '\'', '\'');
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktur dari tabel `users`
 --
 
 CREATE TABLE `users` (
@@ -96,55 +89,62 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
+-- Dumping data untuk tabel `users`
 --
 
 INSERT INTO `users` (`id`, `namaLengkap`, `username`, `password`, `level`) VALUES
-(1, 'Adit Sutarno', 'adit', '123', 'admin');
+(3, 'Tatang Sutarno', 'tatang', '46d5656b47168f8aa605adcfe2f37235', 'pns'),
+(4, 'liltang', 'liltatang', '0479b34d5365c4cb9b34d20b928a5221', 'admin');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `kinerja_pegawai`
+-- Indeks untuk tabel `kinerja_pegawai`
 --
 ALTER TABLE `kinerja_pegawai`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pegawai`
+-- Indeks untuk tabel `misc`
+--
+ALTER TABLE `misc`
+  ADD PRIMARY KEY (`tahun`);
+
+--
+-- Indeks untuk tabel `pegawai`
 --
 ALTER TABLE `pegawai`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `kinerja_pegawai`
+-- AUTO_INCREMENT untuk tabel `kinerja_pegawai`
 --
 ALTER TABLE `kinerja_pegawai`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT for table `pegawai`
+-- AUTO_INCREMENT untuk tabel `pegawai`
 --
 ALTER TABLE `pegawai`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

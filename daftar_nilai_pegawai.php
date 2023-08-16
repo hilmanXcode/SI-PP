@@ -87,6 +87,18 @@ for($i = 0; $i < $nums; $i++){
 </head>
 <body>
 <?php include 'includes/navigasi.php'; ?>
+<?php
+  if($jumlah_data < 1)
+  {
+?>
+
+<div class="container-fluid bg-black text-light p-5 text-center mt-5 w-75 rounded">
+  <h1>Data Tidak Ada Cuy</h1>
+</div>
+<?php 
+}
+else { 
+?>
     <div class="container-fluid d-flex justify-content-center p-4">
         <div style="overflow-x: auto;" class="wrap">
         <!-- <div class="searchbar">
@@ -181,6 +193,7 @@ for($i = 0; $i < $nums; $i++){
         </nav> -->
         </div>
     </div>
+<?php } ?>
     <?php include 'includes/footer.php'; ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 </body>
