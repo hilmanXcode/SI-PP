@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 16 Agu 2023 pada 20.26
--- Versi server: 10.4.28-MariaDB
--- Versi PHP: 8.1.17
+-- Generation Time: May 16, 2024 at 12:48 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `kinerja_pegawai`
+-- Table structure for table `kinerja_pegawai`
 --
 
 CREATE TABLE `kinerja_pegawai` (
@@ -47,24 +47,17 @@ CREATE TABLE `kinerja_pegawai` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `misc`
+-- Table structure for table `misc`
 --
 
 CREATE TABLE `misc` (
   `tahun` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data untuk tabel `misc`
---
-
-INSERT INTO `misc` (`tahun`) VALUES
-(2023);
-
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pegawai`
+-- Table structure for table `pegawai`
 --
 
 CREATE TABLE `pegawai` (
@@ -74,10 +67,17 @@ CREATE TABLE `pegawai` (
   `jabatan` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `pegawai`
+--
+
+INSERT INTO `pegawai` (`id`, `id_atasan`, `namaLengkap`, `jabatan`) VALUES
+(15, NULL, 'papan tulis', 'asd');
+
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -89,62 +89,62 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `namaLengkap`, `username`, `password`, `level`) VALUES
-(3, 'Tatang Sutarno', 'tatang', '46d5656b47168f8aa605adcfe2f37235', 'pns'),
-(4, 'liltang', 'liltatang', '0479b34d5365c4cb9b34d20b928a5221', 'admin');
+(5, 'Suhendra', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'admin'),
+(6, 'Suhendri', 'suhendri', '202cb962ac59075b964b07152d234b70', 'pns');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `kinerja_pegawai`
+-- Indexes for table `kinerja_pegawai`
 --
 ALTER TABLE `kinerja_pegawai`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `misc`
+-- Indexes for table `misc`
 --
 ALTER TABLE `misc`
   ADD PRIMARY KEY (`tahun`);
 
 --
--- Indeks untuk tabel `pegawai`
+-- Indexes for table `pegawai`
 --
 ALTER TABLE `pegawai`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `kinerja_pegawai`
+-- AUTO_INCREMENT for table `kinerja_pegawai`
 --
 ALTER TABLE `kinerja_pegawai`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT untuk tabel `pegawai`
+-- AUTO_INCREMENT for table `pegawai`
 --
 ALTER TABLE `pegawai`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- AUTO_INCREMENT untuk tabel `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
